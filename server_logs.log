@@ -1,0 +1,3 @@
+2025-12-10 00:08:08 [main] INFO  chat.server.ServerApp - Сервер запущен на порту: 8189
+2025-12-10 00:08:40 [main] INFO  chat.server.ServerApp - Клиент подключился: /127.0.0.1
+2025-12-10 00:08:53 [Thread-0] WARN  chat.server.ClientHandler - Клиент отключился

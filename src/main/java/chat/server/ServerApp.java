@@ -12,7 +12,13 @@ import java.util.List;
 import java.util.Properties;
 
 public class ServerApp {
+
+    static {
+        System.setProperty("logback.configurationFile", "src/main/resources/logbackserver.xml");
+    }
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerApp.class);
+
     private int port;
     private final List<ClientHandler> clients;
     private final AuthService authService;

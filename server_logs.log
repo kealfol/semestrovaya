@@ -1,3 +1,13 @@
-2025-12-10 00:08:08 [main] INFO  chat.server.ServerApp - Сервер запущен на порту: 8189
-2025-12-10 00:08:40 [main] INFO  chat.server.ServerApp - Клиент подключился: /127.0.0.1
-2025-12-10 00:08:53 [Thread-0] WARN  chat.server.ClientHandler - Клиент отключился
+2025-12-12 00:08:55 [main] INFO  chat.server.ServerApp - Сервер запущен на порту: 8189
+2025-12-12 00:11:45 [main] INFO  chat.server.ServerApp - Сервер запущен на порту: 8189
+2025-12-12 00:14:13 [main] INFO  chat.server.ServerApp - Клиент подключился: /127.0.0.1
+2025-12-12 00:14:19 [Thread-0] WARN  chat.server.ClientHandler - Клиент отключился
+2025-12-12 00:16:11 [main] INFO  chat.server.ServerApp - Клиент подключился: /127.0.0.1
+2025-12-12 00:16:17 [Thread-1] WARN  chat.server.ClientHandler - Клиент отключился
+2025-12-12 00:16:56 [main] INFO  chat.server.ServerApp - Клиент подключился: /127.0.0.1
+2025-12-12 00:17:01 [Thread-2] WARN  chat.server.ClientHandler - Клиент отключился
+2025-12-12 00:42:45 [main] INFO  chat.server.AuthService - База данных пользователей подключена/создана.
+2025-12-12 00:42:45 [main] INFO  chat.server.ServerApp - Сервер запущен на порту: 8189
+2025-12-12 00:43:05 [main] INFO  chat.server.ServerApp - Клиент подключился: /127.0.0.1
+2025-12-12 00:43:10 [Thread-0] INFO  chat.server.AuthService - Зарегистрирован новый пользователь: admin
+2025-12-12 00:43:31 [Thread-0] WARN  chat.server.ClientHandler - Клиент отключился

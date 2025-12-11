@@ -1,12 +1,18 @@
-C:\Users\user\Desktop\домашка\YAPI(3 SEM)\semestrovaya\src\main\java\chat\client\ChatController.java
-C:\Users\user\Desktop\домашка\YAPI(3 SEM)\semestrovaya\src\main\java\chat\client\ClientApp.java
-C:\Users\user\Desktop\домашка\YAPI(3 SEM)\semestrovaya\src\main\java\chat\client\Network.java
-C:\Users\user\Desktop\домашка\YAPI(3 SEM)\semestrovaya\src\main\java\chat\common\CommandType.java
-C:\Users\user\Desktop\домашка\YAPI(3 SEM)\semestrovaya\src\main\java\chat\common\Config.java
-C:\Users\user\Desktop\домашка\YAPI(3 SEM)\semestrovaya\src\main\java\chat\common\Message.java
-C:\Users\user\Desktop\домашка\YAPI(3 SEM)\semestrovaya\src\main\java\chat\server\AuthService.java
-C:\Users\user\Desktop\домашка\YAPI(3 SEM)\semestrovaya\src\main\java\chat\server\ClientHandler.java
-C:\Users\user\Desktop\домашка\YAPI(3 SEM)\semestrovaya\src\main\java\chat\server\Database.java
-C:\Users\user\Desktop\домашка\YAPI(3 SEM)\semestrovaya\src\main\java\chat\server\ServerApp.java
-C:\Users\user\Desktop\домашка\YAPI(3 SEM)\semestrovaya\src\main\java\chat\server\TestClient.java
-C:\Users\user\Desktop\домашка\YAPI(3 SEM)\semestrovaya\src\main\java\chat\server\UserEntity.java
+C:\Users\Admin1\IdeaProjects\semestrovaya\src\main\java\chat\client\ChatController.java
+C:\Users\Admin1\IdeaProjects\semestrovaya\src\main\java\chat\client\ClientApp.java
+C:\Users\Admin1\IdeaProjects\semestrovaya\src\main\java\chat\client\config\ClientConfig.java
+C:\Users\Admin1\IdeaProjects\semestrovaya\src\main\java\chat\client\controller\ChatController.java
+C:\Users\Admin1\IdeaProjects\semestrovaya\src\main\java\chat\client\controller\LoginController.java
+C:\Users\Admin1\IdeaProjects\semestrovaya\src\main\java\chat\client\exception\ConnectionException.java
+C:\Users\Admin1\IdeaProjects\semestrovaya\src\main\java\chat\client\model\Network.java
+C:\Users\Admin1\IdeaProjects\semestrovaya\src\main\java\chat\client\Network.java
+C:\Users\Admin1\IdeaProjects\semestrovaya\src\main\java\chat\common\CommandType.java
+C:\Users\Admin1\IdeaProjects\semestrovaya\src\main\java\chat\common\Config.java
+C:\Users\Admin1\IdeaProjects\semestrovaya\src\main\java\chat\common\Message.java
+C:\Users\Admin1\IdeaProjects\semestrovaya\src\main\java\chat\server\AuthService.java
+C:\Users\Admin1\IdeaProjects\semestrovaya\src\main\java\chat\server\ClientHandler.java
+C:\Users\Admin1\IdeaProjects\semestrovaya\src\main\java\chat\server\Database.java
+C:\Users\Admin1\IdeaProjects\semestrovaya\src\main\java\chat\server\ServerApp.java
+C:\Users\Admin1\IdeaProjects\semestrovaya\src\main\java\chat\server\TestClient.java
+C:\Users\Admin1\IdeaProjects\semestrovaya\src\main\java\chat\server\UserEntity.java
+C:\Users\Admin1\IdeaProjects\semestrovaya\src\main\java\org\example\Main.java

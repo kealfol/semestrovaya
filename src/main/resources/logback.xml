@@ -1,25 +1,26 @@
 <configuration>
-
-    <!-- 1. Вывод в консоль (Сюда летит всё: и инфо, и ошибки) -->
+    <!-- Вывод в консоль -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <!-- 2. Вывод в файл (Сюда тоже летит всё, чтобы история сохранялась) -->
+    <!-- Запись ошибок в файл -->
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>server_logs.log</file>
-        <append>true</append>
+        <file>client-errors.log</file>
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
     </appender>
 
-    <!-- Уровень логирования: INFO (значит DEBUG сообщения не показываем, остальное показываем) -->
-    <root level="INFO">
+    <root level="info">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
     </root>
-
 </configuration>

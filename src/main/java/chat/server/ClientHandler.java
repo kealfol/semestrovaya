@@ -13,11 +13,13 @@ import java.net.Socket;
 
 public class ClientHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientHandler.class);
+
     private final ServerApp server;
     private final Socket socket;
     private final DataInputStream in;
     private final DataOutputStream out;
     private final Gson gson;
+
     private String username;
 
     public ClientHandler(ServerApp server, Socket socket) throws IOException {
@@ -35,7 +37,7 @@ public class ClientHandler {
                     readMessages();
                 }
             } catch (IOException e) {
-                LOGGER.warn("Клиент отключился");
+                LOGGER.warn("Клиент {} отключился", socket.getInetAddress());
             } finally {
                 closeConnection();
             }
@@ -47,27 +49,50 @@ public class ClientHandler {
             String json = in.readUTF();
             Message message = gson.fromJson(json, Message.class);
 
+            // === ЛОГИКА АВТОРИЗАЦИИ ===
             if (message.getType() == CommandType.AUTH) {
-                String[] parts = message.getMessage().split("\\s+");
+                // Клиент шлет строку: "login password"
+                String[] parts = message.getMessage().split("\\s+", 2);
+                
                 if (parts.length == 2) {
-                    if (server.getAuthService().authenticate(parts[0], parts[1])) {
-                        this.username = parts[0];
-                        sendMessage(CommandType.AUTH_OK, "Вход выполнен");
+                    String login = parts[0];
+                    String password = parts[1];
+
+                    // Проверяем через БД
+                    if (server.getAuthService().authenticate(login, password)) {
+                        this.username = login;
+                        // Клиенту нужно отправить AUTH_OK, чтобы он открыл окно чата
+                        // В сообщении отправляем логин, чтобы клиент знал своё имя
+                        sendMessage(CommandType.AUTH_OK, "Server", login);
                         server.subscribe(this);
                         return true;
                     }
                 }
-                sendMessage(CommandType.ERROR, "Неверный логин/пароль");
+                sendMessage(CommandType.ERROR, "Server", "Неверный логин или пароль");
             } 
+            
+            // === ЛОГИКА РЕГИСТРАЦИИ ===
             else if (message.getType() == CommandType.REGISTER) {
-                String[] parts = message.getMessage().split("\\s+");
-                if (parts.length == 2 && server.getAuthService().register(parts[0], parts[1])) {
-                    sendMessage(CommandType.AUTH_OK, "Регистрация успешна");
+                String[] parts = message.getMessage().split("\\s+", 2);
+                
+                if (parts.length == 2) {
+                    String login = parts[0];
+                    String password = parts[1];
+
+                    // Пробуем записать в БД
+                    if (server.getAuthService().register(login, password)) {
+                        // Хак для клиента: отправляем тип ERROR, чтобы у него всплыло окно Alert
+                        // Но текст пишем позитивный
+                        sendMessage(CommandType.ERROR, "Server", "Регистрация успешна! Теперь войдите.");
+                    } else {
+                        sendMessage(CommandType.ERROR, "Server", "Логин '" + login + "' уже занят.");
+                    }
                 } else {
-                    sendMessage(CommandType.ERROR, "Логин занят");
+                    sendMessage(CommandType.ERROR, "Server", "Ошибка данных регистрации");
                 }
-            } else {
-                sendMessage(CommandType.ERROR, "Нужна авторизация");
+            } 
+            else {
+                sendMessage(CommandType.ERROR, "Server", "Сначала нужно войти!");
             }
         }
     }
@@ -76,26 +101,25 @@ public class ClientHandler {
         while (true) {
             String json = in.readUTF();
             Message message = gson.fromJson(json, Message.class);
+            
+            // Если пришло обычное сообщение — рассылаем всем
             if (message.getType() == CommandType.PUBLIC_MESSAGE) {
                 server.broadcastMessage(this.username, message.getMessage());
             }
         }
     }
 
-    public void sendMessage(String sender, String text) {
-        sendMessage(new Message(CommandType.PUBLIC_MESSAGE, sender, text));
-    }
-
-    public void sendMessage(CommandType type, String text) {
-        sendMessage(new Message(type, "Server", text));
-    }
-
-    private void sendMessage(Message msg) {
+    public void sendMessage(CommandType type, String sender, String text) {
         try {
+            Message msg = new Message(type, sender, text);
             out.writeUTF(gson.toJson(msg));
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Ошибка отправки сообщения", e);
         }
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     private void closeConnection() {
@@ -104,6 +128,8 @@ public class ClientHandler {
             in.close();
             out.close();
             socket.close();
-        } catch (IOException e) { e.printStackTrace(); }
+        } catch (IOException e) {
+            // ignore
+        }
     }
 }

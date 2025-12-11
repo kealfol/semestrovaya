@@ -53,6 +53,7 @@ public class ChatController {
                 case ERROR:
                     showError(message.getMessage());
                     break;
+                default: break;
             }
         });
     }

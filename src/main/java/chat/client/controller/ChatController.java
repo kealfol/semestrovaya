@@ -53,25 +53,26 @@ public class ChatController {
                 case ERROR:
                     showError(message.getMessage());
                     break;
-                default: break;
+                default:
+                    // Игнорируем технические сообщения (AUTH, REGISTER и т.д.) в окне чата
+                    break;
             }
         });
     }
 
     private void updateUserList(String jsonUserList) {
         try {
-            Type listType = new TypeToken<List<String>>() {
-            }.getType();
+            Type listType = new TypeToken<List<String>>() {}.getType();
             List<String> users = gson.fromJson(jsonUserList, listType);
             userCountLabel.setText("В чате: " + users.size());
         } catch (Exception e) {
-            LOGGER.error("Ошибка парсинга списка пользователей: {}", jsonUserList, e);
+            LOGGER.error("Ошибка парсинга списка пользователей", e);
         }
     }
 
     public void showError(String errorMessage) {
         Platform.runLater(() -> {
-            chatArea.appendText(String.format("Ошибка от сервера: %s%n", errorMessage));
+            chatArea.appendText(String.format("[СИСТЕМА]: %s%n", errorMessage));
         });
     }
 }

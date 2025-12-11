@@ -13,10 +13,8 @@ import org.slf4j.LoggerFactory;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.Properties;
 import java.util.function.Consumer;
 
 public class Network {
@@ -28,13 +26,11 @@ public class Network {
     private final int port;
     private int reconnectAttempts;
     private Socket socket;
-    private boolean isConnected = false;
     private DataInputStream in;
     private DataOutputStream out;
 
     private String username;
     private ChatController controller;
-
 
     public Network() {
         this.gson = new Gson();
@@ -44,39 +40,15 @@ public class Network {
         this.reconnectAttempts = 0;
     }
 
-    // Опционально
-    public boolean connectWithRetry() {
-        int maxAttempts = config.getReconnectAttempts();
-        while (reconnectAttempts < maxAttempts) {
-            try {
-                connect();
-                isConnected = true;
-                reconnectAttempts = 0;
-                LOGGER.info("Успешное подключение к серверу");
-                return true;
-            } catch (ConnectionException e) {
-                reconnectAttempts++;
-                LOGGER.warn("Попытка подключения {} из {} неудачна", reconnectAttempts, maxAttempts);
-
-                if (reconnectAttempts < maxAttempts) {
-                    try {
-                        Thread.sleep(config.getReconnectDelay());
-                    } catch (InterruptedException ie) {
-                        Thread.currentThread().interrupt();
-                        return false;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    // Используется
     public void connect() {
         try {
             socket = new Socket();
+            // Подключаемся с таймаутом самого подключения (если сервер выключен)
             socket.connect(new InetSocketAddress(host, port), config.getConnectionTimeout());
-            socket.setSoTimeout(5000);
+            
+            // ВАЖНО: УБРАЛИ socket.setSoTimeout(5000);
+            // Теперь клиент будет ждать ответа от сервера бесконечно долго и не вылетит.
+
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
             LOGGER.info("Установлено соединение с сервером: {}:{}", host, port);
@@ -99,11 +71,13 @@ public class Network {
             try {
                 boolean isAuthenticated = false;
                 while (true) {
-                    String json = in.readUTF();
+                    String json = in.readUTF(); // Ждем сообщения от сервера (теперь без тайм-аута)
                     Message message = gson.fromJson(json, Message.class);
 
                     if (!isAuthenticated) {
                         if (message.getType() == CommandType.AUTH_OK) {
+                            // Сервер присылает: "login успешно вошел" или просто логин
+                            // Берем первое слово как имя
                             this.username = message.getMessage().split("\\s+")[0];
                             LOGGER.info("Успешная аутентификация пользователя: {}", this.username);
                             isAuthenticated = true;
@@ -118,7 +92,7 @@ public class Network {
                     }
                 }
             } catch (IOException e) {
-                LOGGER.warn("Соединение потеряно", e);
+                LOGGER.warn("Соединение с сервером потеряно: {}", e.getMessage());
                 if (controller != null) {
                     Platform.runLater(() -> controller.showError("Соединение с сервером потеряно"));
                 }
@@ -130,34 +104,35 @@ public class Network {
 
     public void sendMessage(Message message) {
         if (!isConnected()) {
-            throw new ConnectionException("Нет соединения с сервером");
+            // Если соединения нет, не пытаемся писать в поток, иначе будет ошибка
+            LOGGER.error("Попытка отправить сообщение без подключения");
+            return; 
         }
         try {
             out.writeUTF(gson.toJson(message));
             out.flush();
         } catch (IOException e) {
             LOGGER.error("Не удалось отправить сообщение", e);
-            isConnected = false;
-            throw new ConnectionException("Не удалось отправить сообщение", e);
+            close();
         }
     }
 
     public void sendPublicMessage(String messageText) {
         Message message = new Message(CommandType.PUBLIC_MESSAGE, this.username, messageText);
         sendMessage(message);
-        LOGGER.info("Пользователь '{}' отправил публичное сообщение", this.username);
     }
 
     public void sendAuthMessage(String login, String password) {
+        // "client" - это отправитель, логин и пароль в теле сообщения
         Message message = new Message(CommandType.AUTH, "client", login + " " + password);
         sendMessage(message);
-        LOGGER.info("Пользователь '{}' пытается войти", login);
+        LOGGER.info("Отправка запроса авторизации для {}", login);
     }
 
     public void sendRegisterMessage(String login, String password) {
         Message message = new Message(CommandType.REGISTER, "client", login + " " + password);
         sendMessage(message);
-        LOGGER.info("Пользователь '{}' пытается зарегистрироваться", login);
+        LOGGER.info("Отправка запроса регистрации для {}", login);
     }
 
     public void close() {

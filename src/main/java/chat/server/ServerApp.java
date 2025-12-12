@@ -44,6 +44,7 @@ public class ServerApp {
             LOGGER.info("Сервер запущен на порту: {}", port);
             while (true) {
                 Socket socket = serverSocket.accept();
+
                 LOGGER.info("Клиент подключился: {}", socket.getInetAddress());
                 new ClientHandler(this, socket).start();
             }

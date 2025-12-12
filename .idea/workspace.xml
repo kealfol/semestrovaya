@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="17645264-4449-4993-bed2-e1df4eb7562f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chat/client/ClientApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/client/ClientApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chat/client/model/Network.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/client/model/Network.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chat/common/CommandType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/common/CommandType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chat/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/server/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chat/server/ServerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/server/ServerApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/ClientApp.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/config/ClientConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/controller/ChatController$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/controller/ChatController$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/controller/ChatController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/controller/LoginController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/exception/ConnectionException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/model/Network.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/common/CommandType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/common/Config.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/common/Message.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/server/AuthService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/server/ClientHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/server/Database.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/server/ServerApp.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/server/TestClient.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/server/UserEntity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fxml/chat.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fxml/login.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/logback.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/logbackserver.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 6
+}]]></component>
+  <component name="ProjectId" id="36jm7B7xEbydbQXpnHM4iQv5LH8" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "development",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.25410.129" />
+        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-IU-251.25410.129" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="17645264-4449-4993-bed2-e1df4eb7562f" name="Changes" comment="" />
+      <created>1765528185916</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1765528185916</updated>
+      <workItem from="1765528187590" duration="17000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

@@ -101,10 +101,12 @@ public class ClientHandler {
         while (true) {
             String json = in.readUTF();
             Message message = gson.fromJson(json, Message.class);
-            
-            // Если пришло обычное сообщение — рассылаем всем
+
             if (message.getType() == CommandType.PUBLIC_MESSAGE) {
                 server.broadcastMessage(this.username, message.getMessage());
+            }
+            else if (message.getType() == CommandType.LIST_REQUEST) {
+                server.broadcastClientsList();
             }
         }
     }

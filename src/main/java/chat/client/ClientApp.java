@@ -46,14 +46,24 @@ public class ClientApp extends Application {
     }
 
     public void showChatWindow() throws IOException {
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/chat.fxml"));
         Parent root = loader.load();
 
         ChatController controller = loader.getController();
+
+        // 1. Установка контроллера в Network
+        network.setController(controller);
+
+        // 2. Инициализация контроллера
         controller.init(network);
 
         primaryStage.setTitle("Чат - " + network.getUsername());
         primaryStage.setScene(new Scene(root, 600, 400));
+        primaryStage.show();
+
+        // 3. Запрашиваем список пользователей, когда клиент готов
+        network.sendRequestUserList();
     }
 
     public static void main(String[] args) {

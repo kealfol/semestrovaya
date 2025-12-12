@@ -135,6 +135,12 @@ public class Network {
         LOGGER.info("Отправка запроса регистрации для {}", login);
     }
 
+    public void sendRequestUserList() {
+        Message message = new Message(CommandType.LIST_REQUEST, this.username, "");
+        sendMessage(message);
+        LOGGER.info("Отправлен запрос списка пользователей.");
+    }
+
     public void close() {
         try {
             if (socket != null && !socket.isClosed()) {

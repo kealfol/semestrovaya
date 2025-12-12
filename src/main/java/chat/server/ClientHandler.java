@@ -11,12 +11,10 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-public class ClientHandler {
+// 1. Добавляем implements Runnable
+public class ClientHandler implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientHandler.class);
-    
-    // Минимальная задержка между сообщениями (в миллисекундах)
-    // 800 мс = чуть меньше секунды. Быстрее писать руками сложно, только спамить.
-    private static final long MESSAGE_DELAY_MS = 900;
+    private static final long MESSAGE_DELAY_MS = 800;
 
     private final ServerApp server;
     private final Socket socket;
@@ -25,7 +23,7 @@ public class ClientHandler {
     private final Gson gson;
 
     private String username;
-    private long lastMessageTime = 0; // Время последнего сообщения
+    private long lastMessageTime = 0;
 
     public ClientHandler(ServerApp server, Socket socket) throws IOException {
         this.server = server;
@@ -35,18 +33,19 @@ public class ClientHandler {
         this.gson = new Gson();
     }
 
-    public void start() {
-        new Thread(() -> {
-            try {
-                if (authenticate()) {
-                    readMessages();
-                }
-            } catch (IOException e) {
-                LOGGER.warn("Client {} disconnected", socket.getInetAddress());
-            } finally {
-                closeConnection();
+    // 2. Метод start() удален. Вся логика переехала в метод run()
+    // Этот метод будет вызван автоматически Пулом потоков
+    @Override
+    public void run() {
+        try {
+            if (authenticate()) {
+                readMessages();
             }
-        }).start();
+        } catch (IOException e) {
+            LOGGER.warn("Client {} disconnected", socket.getInetAddress());
+        } finally {
+            closeConnection();
+        }
     }
 
     private boolean authenticate() throws IOException {
@@ -98,23 +97,13 @@ public class ClientHandler {
             Message message = gson.fromJson(json, Message.class);
             
             if (message.getType() == CommandType.PUBLIC_MESSAGE) {
-                // --- ЗАЩИТА ОТ СПАМА ---
                 long currentTime = System.currentTimeMillis();
-                
-                // Если прошло меньше времени, чем задано в задержке
                 if (currentTime - lastMessageTime < MESSAGE_DELAY_MS) {
-                    // Отправляем предупреждение ЛИЧНО этому пользователю
                     sendMessage(CommandType.ERROR, "Server", "Too fast! Please do not spam.");
                     LOGGER.warn("User {} is spamming. Message blocked.", username);
-                    
-                    // continue означает "пропустить этот цикл" -> сообщение не уйдет в общий чат
                     continue; 
                 }
-                
-                // Если всё ок, обновляем время последнего сообщения
                 lastMessageTime = currentTime;
-                
-                // И рассылаем всем
                 server.broadcastMessage(this.username, message.getMessage());
             }
         }

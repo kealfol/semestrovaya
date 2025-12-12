@@ -12,6 +12,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class ServerApp {
@@ -20,16 +22,24 @@ public class ServerApp {
     }
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerApp.class);
+    
+    // Лимит одновременных клиентов
+    private static final int MAX_CLIENTS = 40;
 
     private int port;
     private final List<ClientHandler> clients;
     private final AuthService authService;
     private final Gson gson;
+    
+    // Пул потоков (Менеджер)
+    private final ExecutorService executorService;
 
     public ServerApp() {
         this.clients = new ArrayList<>();
         this.authService = new AuthService();
         this.gson = new Gson();
+        // Создаем пул на 40 потоков
+        this.executorService = Executors.newFixedThreadPool(MAX_CLIENTS);
         loadConfig();
     }
 
@@ -40,13 +50,25 @@ public class ServerApp {
     public void start() {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             LOGGER.info("Server started on port: {}", port);
+            LOGGER.info("Max connections limit: {}", MAX_CLIENTS);
+            
             while (true) {
+                // Ждем подключения
                 Socket socket = serverSocket.accept();
                 LOGGER.info("Client connected: {}", socket.getInetAddress());
-                new ClientHandler(this, socket).start();
+                
+                // Создаем обработчик
+                ClientHandler handler = new ClientHandler(this, socket);
+                
+                // ВМЕСТО handler.start() ОТДАЕМ ЕГО В ПУЛ
+                // Если мест нет, он будет ждать в очереди
+                executorService.execute(handler);
             }
         } catch (IOException e) {
             LOGGER.error("Server error", e);
+        } finally {
+            // При остановке сервера закрываем пул
+            executorService.shutdown();
         }
     }
 

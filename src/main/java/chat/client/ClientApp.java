@@ -23,7 +23,6 @@ public class ClientApp extends Application {
         try {
             network.connect();
         } catch (Exception e) {
-            // Окно с ошибкой будет показано из LoginController
             System.err.println("Не удалось подключиться к серверу.");
         }
 
@@ -46,24 +45,21 @@ public class ClientApp extends Application {
     }
 
     public void showChatWindow() throws IOException {
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/chat.fxml"));
         Parent root = loader.load();
 
         ChatController controller = loader.getController();
 
-        // 1. Установка контроллера в Network
-        network.setController(controller);
-
-        // 2. Инициализация контроллера
+        // Внутри метода init(network) уже вызывается network.setController(this),
+        // который и спровоцирует выдачу всех накопленных сообщений (включая список юзеров).
         controller.init(network);
 
         primaryStage.setTitle("Чат - " + network.getUsername());
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
-
-        // 3. Запрашиваем список пользователей, когда клиент готов
-        network.sendRequestUserList();
+        
+        // УДАЛЕНО: network.sendRequestUserList(); 
+        // Причина: Сервер сам присылает список при входе, запрашивать вручную не нужно.
     }
 
     public static void main(String[] args) {

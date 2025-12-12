@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat.client.controller.ChatController">
+    <top>
+        <HBox alignment="CENTER_RIGHT" spacing="10">
+            <padding>
+                <Insets top="5" right="10" bottom="5" left="10"/>
+            </padding>
+            <Label fx:id="userCountLabel" text="В чате: 0"/>
+        </HBox>
+    </top>
+    <center>
+        <TextArea fx:id="chatArea" editable="false" wrapText="true" BorderPane.alignment="CENTER"/>
+    </center>
+    <bottom>
+        <HBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <TextField fx:id="messageField" onAction="#handleSend" HBox.hgrow="ALWAYS"/>
+            <Button text="Отправить" onAction="#handleSend" defaultButton="true"/>
+        </HBox>
+    </bottom>
+</BorderPane>

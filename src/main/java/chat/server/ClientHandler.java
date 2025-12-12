@@ -37,7 +37,7 @@ public class ClientHandler {
                     readMessages();
                 }
             } catch (IOException e) {
-                LOGGER.warn("Клиент {} отключился", socket.getInetAddress());
+                LOGGER.warn("Client {} disconnected", socket.getInetAddress());
             } finally {
                 closeConnection();
             }
@@ -49,29 +49,22 @@ public class ClientHandler {
             String json = in.readUTF();
             Message message = gson.fromJson(json, Message.class);
 
-            // === ЛОГИКА АВТОРИЗАЦИИ ===
             if (message.getType() == CommandType.AUTH) {
-                // Клиент шлет строку: "login password"
                 String[] parts = message.getMessage().split("\\s+", 2);
                 
                 if (parts.length == 2) {
                     String login = parts[0];
                     String password = parts[1];
 
-                    // Проверяем через БД
                     if (server.getAuthService().authenticate(login, password)) {
                         this.username = login;
-                        // Клиенту нужно отправить AUTH_OK, чтобы он открыл окно чата
-                        // В сообщении отправляем логин, чтобы клиент знал своё имя
                         sendMessage(CommandType.AUTH_OK, "Server", login);
                         server.subscribe(this);
                         return true;
                     }
                 }
-                sendMessage(CommandType.ERROR, "Server", "Неверный логин или пароль");
+                sendMessage(CommandType.ERROR, "Server", "Invalid login or password");
             } 
-            
-            // === ЛОГИКА РЕГИСТРАЦИИ ===
             else if (message.getType() == CommandType.REGISTER) {
                 String[] parts = message.getMessage().split("\\s+", 2);
                 
@@ -79,20 +72,17 @@ public class ClientHandler {
                     String login = parts[0];
                     String password = parts[1];
 
-                    // Пробуем записать в БД
                     if (server.getAuthService().register(login, password)) {
-                        // Хак для клиента: отправляем тип ERROR, чтобы у него всплыло окно Alert
-                        // Но текст пишем позитивный
-                        sendMessage(CommandType.ERROR, "Server", "Регистрация успешна! Теперь войдите.");
+                        sendMessage(CommandType.ERROR, "Server", "Registration successful! Please login.");
                     } else {
-                        sendMessage(CommandType.ERROR, "Server", "Логин '" + login + "' уже занят.");
+                        sendMessage(CommandType.ERROR, "Server", "Login '" + login + "' is already taken.");
                     }
                 } else {
-                    sendMessage(CommandType.ERROR, "Server", "Ошибка данных регистрации");
+                    sendMessage(CommandType.ERROR, "Server", "Registration data error");
                 }
             } 
             else {
-                sendMessage(CommandType.ERROR, "Server", "Сначала нужно войти!");
+                sendMessage(CommandType.ERROR, "Server", "Authentication required first");
             }
         }
     }
@@ -101,12 +91,9 @@ public class ClientHandler {
         while (true) {
             String json = in.readUTF();
             Message message = gson.fromJson(json, Message.class);
-
+            
             if (message.getType() == CommandType.PUBLIC_MESSAGE) {
                 server.broadcastMessage(this.username, message.getMessage());
-            }
-            else if (message.getType() == CommandType.LIST_REQUEST) {
-                server.broadcastClientsList();
             }
         }
     }
@@ -116,7 +103,7 @@ public class ClientHandler {
             Message msg = new Message(type, sender, text);
             out.writeUTF(gson.toJson(msg));
         } catch (IOException e) {
-            LOGGER.error("Ошибка отправки сообщения", e);
+            LOGGER.error("Failed to send message", e);
         }
     }
 

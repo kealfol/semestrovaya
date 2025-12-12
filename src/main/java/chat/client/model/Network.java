@@ -15,6 +15,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 public class Network {
@@ -24,37 +26,34 @@ public class Network {
     private final Gson gson;
     private final String host;
     private final int port;
-    private int reconnectAttempts;
     private Socket socket;
     private DataInputStream in;
     private DataOutputStream out;
 
     private String username;
     private ChatController controller;
+    
+    // --- НОВОЕ: Буфер для сообщений, которые пришли до открытия окна ---
+    private final List<Message> delayedMessages = new ArrayList<>();
 
     public Network() {
         this.gson = new Gson();
         this.config = new ClientConfig();
         this.host = config.getServerHost();
         this.port = config.getServerPort();
-        this.reconnectAttempts = 0;
     }
 
     public void connect() {
         try {
             socket = new Socket();
-            // Подключаемся с таймаутом самого подключения (если сервер выключен)
             socket.connect(new InetSocketAddress(host, port), config.getConnectionTimeout());
             
-            // ВАЖНО: УБРАЛИ socket.setSoTimeout(5000);
-            // Теперь клиент будет ждать ответа от сервера бесконечно долго и не вылетит.
-
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
-            LOGGER.info("Установлено соединение с сервером: {}:{}", host, port);
+            LOGGER.info("Connected to server: {}:{}", host, port);
         } catch (IOException e) {
-            LOGGER.error("Ошибка подключения", e);
-            throw new ConnectionException("Не удалось подключиться к серверу: " + host + ":" + port, e);
+            LOGGER.error("Connection error", e);
+            throw new ConnectionException("Failed to connect to server: " + host + ":" + port, e);
         }
     }
 
@@ -62,8 +61,18 @@ public class Network {
         return socket != null && socket.isConnected() && !socket.isClosed();
     }
 
+    // --- ОБНОВЛЕННЫЙ МЕТОД ---
     public void setController(ChatController controller) {
         this.controller = controller;
+        
+        // Как только окно открылось и контроллер пришел,
+        // отдаем ему все сообщения, которые накопились в буфере
+        synchronized (delayedMessages) {
+            for (Message msg : delayedMessages) {
+                Platform.runLater(() -> controller.handleMessage(msg));
+            }
+            delayedMessages.clear();
+        }
     }
 
     public void startReading(Runnable onAuthOk, Consumer<String> onAuthError) {
@@ -71,30 +80,35 @@ public class Network {
             try {
                 boolean isAuthenticated = false;
                 while (true) {
-                    String json = in.readUTF(); // Ждем сообщения от сервера (теперь без тайм-аута)
+                    String json = in.readUTF();
                     Message message = gson.fromJson(json, Message.class);
 
                     if (!isAuthenticated) {
                         if (message.getType() == CommandType.AUTH_OK) {
-                            // Сервер присылает: "login успешно вошел" или просто логин
-                            // Берем первое слово как имя
                             this.username = message.getMessage().split("\\s+")[0];
-                            LOGGER.info("Успешная аутентификация пользователя: {}", this.username);
+                            LOGGER.info("User authenticated: {}", this.username);
                             isAuthenticated = true;
                             onAuthOk.run();
                         } else if (message.getType() == CommandType.ERROR) {
                             onAuthError.accept(message.getMessage());
                         }
                     } else {
+                        // --- ЛОГИКА БУФЕРИЗАЦИИ ---
                         if (controller != null) {
+                            // Если окно уже открыто — показываем сразу
                             Platform.runLater(() -> controller.handleMessage(message));
+                        } else {
+                            // Если окно еще грузится — сохраняем на потом
+                            synchronized (delayedMessages) {
+                                delayedMessages.add(message);
+                            }
                         }
                     }
                 }
             } catch (IOException e) {
-                LOGGER.warn("Соединение с сервером потеряно: {}", e.getMessage());
+                LOGGER.warn("Connection lost: {}", e.getMessage());
                 if (controller != null) {
-                    Platform.runLater(() -> controller.showError("Соединение с сервером потеряно"));
+                    Platform.runLater(() -> controller.showError("Connection lost"));
                 }
             } finally {
                 close();
@@ -104,15 +118,14 @@ public class Network {
 
     public void sendMessage(Message message) {
         if (!isConnected()) {
-            // Если соединения нет, не пытаемся писать в поток, иначе будет ошибка
-            LOGGER.error("Попытка отправить сообщение без подключения");
+            LOGGER.error("Attempt to send message without connection");
             return; 
         }
         try {
             out.writeUTF(gson.toJson(message));
             out.flush();
         } catch (IOException e) {
-            LOGGER.error("Не удалось отправить сообщение", e);
+            LOGGER.error("Failed to send message", e);
             close();
         }
     }
@@ -123,32 +136,25 @@ public class Network {
     }
 
     public void sendAuthMessage(String login, String password) {
-        // "client" - это отправитель, логин и пароль в теле сообщения
         Message message = new Message(CommandType.AUTH, "client", login + " " + password);
         sendMessage(message);
-        LOGGER.info("Отправка запроса авторизации для {}", login);
+        LOGGER.info("Auth request sent for {}", login);
     }
 
     public void sendRegisterMessage(String login, String password) {
         Message message = new Message(CommandType.REGISTER, "client", login + " " + password);
         sendMessage(message);
-        LOGGER.info("Отправка запроса регистрации для {}", login);
-    }
-
-    public void sendRequestUserList() {
-        Message message = new Message(CommandType.LIST_REQUEST, this.username, "");
-        sendMessage(message);
-        LOGGER.info("Отправлен запрос списка пользователей.");
+        LOGGER.info("Registration request sent for {}", login);
     }
 
     public void close() {
         try {
             if (socket != null && !socket.isClosed()) {
                 socket.close();
-                LOGGER.info("Соединение закрыто.");
+                LOGGER.info("Connection closed.");
             }
         } catch (IOException e) {
-            LOGGER.error("Ошибка при закрытии соединения", e);
+            LOGGER.error("Error closing connection", e);
         }
     }
 

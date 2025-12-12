@@ -1,6 +1,7 @@
 package chat.server;
 
 import chat.common.CommandType;
+import chat.common.Message; // Не забудь добавить этот импорт!
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,23 +23,18 @@ public class ServerApp {
     }
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerApp.class);
-    
-    // Лимит одновременных клиентов
     private static final int MAX_CLIENTS = 40;
 
     private int port;
     private final List<ClientHandler> clients;
     private final AuthService authService;
     private final Gson gson;
-    
-    // Пул потоков (Менеджер)
     private final ExecutorService executorService;
 
     public ServerApp() {
         this.clients = new ArrayList<>();
         this.authService = new AuthService();
         this.gson = new Gson();
-        // Создаем пул на 40 потоков
         this.executorService = Executors.newFixedThreadPool(MAX_CLIENTS);
         loadConfig();
     }
@@ -53,21 +49,14 @@ public class ServerApp {
             LOGGER.info("Max connections limit: {}", MAX_CLIENTS);
             
             while (true) {
-                // Ждем подключения
                 Socket socket = serverSocket.accept();
                 LOGGER.info("Client connected: {}", socket.getInetAddress());
-                
-                // Создаем обработчик
                 ClientHandler handler = new ClientHandler(this, socket);
-                
-                // ВМЕСТО handler.start() ОТДАЕМ ЕГО В ПУЛ
-                // Если мест нет, он будет ждать в очереди
                 executorService.execute(handler);
             }
         } catch (IOException e) {
             LOGGER.error("Server error", e);
         } finally {
-            // При остановке сервера закрываем пул
             executorService.shutdown();
         }
     }
@@ -75,6 +64,14 @@ public class ServerApp {
     public synchronized void subscribe(ClientHandler client) {
         clients.add(client);
         broadcastClientsList();
+        
+        // --- НОВОЕ: Отправляем историю сообщений новому клиенту ---
+        List<Message> history = authService.getLastMessages(20); // Последние 20
+        for (Message msg : history) {
+            // Формируем JSON вручную или через GSON и шлем напрямую клиенту
+            String json = gson.toJson(msg);
+            client.sendMessage(CommandType.PUBLIC_MESSAGE, msg.getSender(), msg.getMessage());
+        }
     }
 
     public synchronized void unsubscribe(ClientHandler client) {
@@ -83,6 +80,9 @@ public class ServerApp {
     }
 
     public synchronized void broadcastMessage(String sender, String message) {
+        // --- НОВОЕ: Сохраняем сообщение в БД перед отправкой ---
+        authService.saveMessage(sender, message);
+        
         for (ClientHandler client : clients) {
             client.sendMessage(CommandType.PUBLIC_MESSAGE, sender, message);
         }

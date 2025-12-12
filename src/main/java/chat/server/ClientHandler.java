@@ -13,6 +13,10 @@ import java.net.Socket;
 
 public class ClientHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientHandler.class);
+    
+    // Минимальная задержка между сообщениями (в миллисекундах)
+    // 800 мс = чуть меньше секунды. Быстрее писать руками сложно, только спамить.
+    private static final long MESSAGE_DELAY_MS = 900;
 
     private final ServerApp server;
     private final Socket socket;
@@ -21,6 +25,7 @@ public class ClientHandler {
     private final Gson gson;
 
     private String username;
+    private long lastMessageTime = 0; // Время последнего сообщения
 
     public ClientHandler(ServerApp server, Socket socket) throws IOException {
         this.server = server;
@@ -93,6 +98,23 @@ public class ClientHandler {
             Message message = gson.fromJson(json, Message.class);
             
             if (message.getType() == CommandType.PUBLIC_MESSAGE) {
+                // --- ЗАЩИТА ОТ СПАМА ---
+                long currentTime = System.currentTimeMillis();
+                
+                // Если прошло меньше времени, чем задано в задержке
+                if (currentTime - lastMessageTime < MESSAGE_DELAY_MS) {
+                    // Отправляем предупреждение ЛИЧНО этому пользователю
+                    sendMessage(CommandType.ERROR, "Server", "Too fast! Please do not spam.");
+                    LOGGER.warn("User {} is spamming. Message blocked.", username);
+                    
+                    // continue означает "пропустить этот цикл" -> сообщение не уйдет в общий чат
+                    continue; 
+                }
+                
+                // Если всё ок, обновляем время последнего сообщения
+                lastMessageTime = currentTime;
+                
+                // И рассылаем всем
                 server.broadcastMessage(this.username, message.getMessage());
             }
         }

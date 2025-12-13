@@ -5,71 +5,89 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17645264-4449-4993-bed2-e1df4eb7562f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/client/ClientApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/client/ClientApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/client/model/Network.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/client/model/Network.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/common/CommandType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/common/CommandType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/server/ClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/server/ServerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/server/ServerApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/ClientApp.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/config/ClientConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/controller/ChatController$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/controller/ChatController$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/controller/ChatController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/controller/LoginController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/exception/ConnectionException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/model/Network.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/common/CommandType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/common/Config.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/common/Message.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/server/AuthService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/server/ClientHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/server/Database.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/server/ServerApp.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/server/TestClient.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/server/UserEntity.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fxml/chat.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fxml/login.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/logback.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/logbackserver.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chat/client/controller/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/client/controller/ChatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/controller/ChatController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/chat/client/controller/ChatController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/controller/ChatController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/chat/client/controller/ChatController$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/controller/ChatController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/chat/client/controller/ChatController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 6
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="36jm7B7xEbydbQXpnHM4iQv5LH8" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "development",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.ClientApp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ServerApp.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.semestrovaya [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RunManager" selected="Application.ServerApp">
+    <configuration name="ClientApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="chat.client.ClientApp" />
+      <module name="semestrovaya" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="chat.client.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServerApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="chat.server.ServerApp" />
+      <module name="semestrovaya" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="chat.server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.ServerApp" />
+        <item itemvalue="Application.ClientApp" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -86,6 +104,9 @@
       <option name="presentableId" value="Default" />
       <updated>1765528185916</updated>
       <workItem from="1765528187590" duration="17000" />
+      <workItem from="1765606722603" duration="275000" />
+      <workItem from="1765607700876" duration="1162000" />
+      <workItem from="1765614012432" duration="454000" />
     </task>
     <servers />
   </component>

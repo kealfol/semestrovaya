@@ -1,7 +1,7 @@
 package chat.server;
 
 import chat.common.CommandType;
-import chat.common.Message; // Не забудь добавить этот импорт!
+import chat.common.Message;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,10 +65,8 @@ public class ServerApp {
         clients.add(client);
         broadcastClientsList();
         
-        // --- НОВОЕ: Отправляем историю сообщений новому клиенту ---
-        List<Message> history = authService.getLastMessages(20); // Последние 20
+        List<Message> history = authService.getLastMessages(20); 
         for (Message msg : history) {
-            // Формируем JSON вручную или через GSON и шлем напрямую клиенту
             String json = gson.toJson(msg);
             client.sendMessage(CommandType.PUBLIC_MESSAGE, msg.getSender(), msg.getMessage());
         }
@@ -80,7 +78,6 @@ public class ServerApp {
     }
 
     public synchronized void broadcastMessage(String sender, String message) {
-        // --- НОВОЕ: Сохраняем сообщение в БД перед отправкой ---
         authService.saveMessage(sender, message);
         
         for (ClientHandler client : clients) {

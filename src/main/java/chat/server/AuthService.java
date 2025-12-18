@@ -60,7 +60,6 @@ public class AuthService {
 
     public List<Message> getLastMessages(int limit) {
         List<Message> history = new ArrayList<>();
-        // ИСПРАВЛЕНИЕ ТУТ: Добавили 'id' во внутренний SELECT
         String sql = "SELECT * FROM (SELECT id, sender, message FROM messages ORDER BY id DESC LIMIT ?) ORDER BY id ASC";
         
         try (Connection connection = DriverManager.getConnection(DB_URL);
@@ -80,7 +79,6 @@ public class AuthService {
         return history;
     }
 
-    // --- Остальные методы без изменений ---
 
     public boolean register(String login, String password) {
         String sql = "INSERT INTO users(login, password) VALUES(?, ?)";

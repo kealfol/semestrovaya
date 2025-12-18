@@ -11,7 +11,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-// 1. Добавляем implements Runnable
 public class ClientHandler implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientHandler.class);
     private static final long MESSAGE_DELAY_MS = 800;
@@ -33,8 +32,6 @@ public class ClientHandler implements Runnable {
         this.gson = new Gson();
     }
 
-    // 2. Метод start() удален. Вся логика переехала в метод run()
-    // Этот метод будет вызван автоматически Пулом потоков
     @Override
     public void run() {
         try {
@@ -77,14 +74,14 @@ public class ClientHandler implements Runnable {
                     String password = parts[1];
 
                     if (server.getAuthService().register(login, password)) {
-                        sendMessage(CommandType.ERROR, "Server", "Registration successful! Please login.");
+                        sendMessage(CommandType.REG_OK, "Server", "Registration successful! Please login.");
                     } else {
                         sendMessage(CommandType.ERROR, "Server", "Login '" + login + "' is already taken.");
                     }
                 } else {
                     sendMessage(CommandType.ERROR, "Server", "Registration data error");
                 }
-            } 
+            }
             else {
                 sendMessage(CommandType.ERROR, "Server", "Authentication required first");
             }

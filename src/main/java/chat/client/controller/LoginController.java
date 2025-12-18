@@ -66,4 +66,14 @@ public class LoginController {
             alert.showAndWait();
         });
     }
+
+    public void showInfo(String message) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Успешно");
+            alert.setHeaderText(null);
+            alert.setContentText(message);
+            alert.showAndWait();
+        });
+    }
 }

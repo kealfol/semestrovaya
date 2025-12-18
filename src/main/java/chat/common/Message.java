@@ -6,7 +6,7 @@ public class Message {
     private CommandType type;
     private String sender;
     private String message;
-    private String timestamp; // Используем String для простоты JSON
+    private String timestamp;
 
     public Message() {
     }

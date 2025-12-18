@@ -36,7 +36,11 @@ public class ClientApp extends Application {
         LoginController controller = loader.getController();
         controller.init(network, this);
 
-        network.startReading(controller::handleAuthOk, controller::showAlert);
+        network.startReading(
+            controller::handleAuthOk, 
+            controller::showAlert,    
+            controller::showInfo      
+        );
 
         primaryStage.setTitle("Вход в чат");
         primaryStage.setScene(new Scene(root));

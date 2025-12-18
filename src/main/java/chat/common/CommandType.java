@@ -4,6 +4,7 @@ public enum CommandType {
     AUTH,           // Запрос на вход
     AUTH_OK,        // Вход успешен
     REGISTER,       // Запрос на регистрацию
+    REG_OK,         // Успешная регистрация
     ERROR,          // Ошибка
     PUBLIC_MESSAGE, // Сообщение в чат
     LIST_REQUEST,   // Запрос списка пользователей

@@ -75,7 +75,7 @@ public class Network {
         }
     }
 
-    public void startReading(Runnable onAuthOk, Consumer<String> onAuthError) {
+    public void startReading(Runnable onAuthOk, Consumer<String> onAuthError, Consumer<String> onRegOk) {
         new Thread(() -> {
             try {
                 boolean isAuthenticated = false;
@@ -89,16 +89,17 @@ public class Network {
                             LOGGER.info("User authenticated: {}", this.username);
                             isAuthenticated = true;
                             onAuthOk.run();
-                        } else if (message.getType() == CommandType.ERROR) {
+                        } 
+                        else if (message.getType() == CommandType.ERROR) {
                             onAuthError.accept(message.getMessage());
                         }
+                        else if (message.getType() == CommandType.REG_OK) {
+                            onRegOk.accept(message.getMessage());
+                        }
                     } else {
-                        // --- ЛОГИКА БУФЕРИЗАЦИИ ---
                         if (controller != null) {
-                            // Если окно уже открыто — показываем сразу
                             Platform.runLater(() -> controller.handleMessage(message));
                         } else {
-                            // Если окно еще грузится — сохраняем на потом
                             synchronized (delayedMessages) {
                                 delayedMessages.add(message);
                             }

@@ -2,6 +2,7 @@ package chat.client.controller;
 
 import chat.client.ClientApp;
 import chat.client.model.Network;
+import chat.common.validation.RegistrationValidator;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -15,8 +16,10 @@ public class LoginController {
     private Network network;
     private ClientApp clientApp;
 
-    @FXML private TextField loginField;
-    @FXML private PasswordField passwordField;
+    @FXML
+    private TextField loginField;
+    @FXML
+    private PasswordField passwordField;
 
     public void init(Network network, ClientApp clientApp) {
         this.network = network;
@@ -25,25 +28,35 @@ public class LoginController {
 
     @FXML
     private void handleLogin() {
-        String login = loginField.getText().trim();
-        String password = passwordField.getText().trim();
+        String login = loginField.getText();
+        String password = passwordField.getText();
 
         if (login.isEmpty() || password.isEmpty()) {
-            showAlert("Логин и пароль не могут быть пустыми");
+            showAlert("Логин и пароль не могут быть пустыми!");
             return;
         }
+
         network.sendAuthMessage(login, password);
     }
 
     @FXML
     private void handleRegister() {
-        String login = loginField.getText().trim();
-        String password = passwordField.getText().trim();
+        String login = loginField.getText();
+        String password = passwordField.getText();
 
+        // Проверка заполненности
         if (login.isEmpty() || password.isEmpty()) {
-            showAlert("Логин и пароль не могут быть пустыми");
+            showAlert("Логин и пароль не могут быть пустыми!");
             return;
         }
+
+        // Валидация
+        String validationError = RegistrationValidator.validateRegistration(login, password);
+        if (validationError != null) {
+            showAlert(validationError);
+            return;
+        }
+
         network.sendRegisterMessage(login, password);
     }
 

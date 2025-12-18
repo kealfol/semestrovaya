@@ -39,6 +39,7 @@ public class ChatController {
         this.network = network;
         this.network.setController(this);
 
+        // Обработка клика
         userCountLabel.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1) {
                 showUsersList();
@@ -70,7 +71,6 @@ public class ChatController {
                     showError(message.getMessage());
                     break;
                 default:
-                    // Игнорируем технические сообщения (AUTH, REGISTER и т.д.) в окне чата
                     break;
             }
         });
@@ -78,7 +78,9 @@ public class ChatController {
 
     private void updateUserList(String jsonUserList) {
         try {
-            Type listType = new TypeToken<List<String>>() {}.getType();
+            // Парсинг JSON списка пользователей
+            Type listType = new TypeToken<List<String>>() {
+            }.getType();
             List<String> users = gson.fromJson(jsonUserList, listType);
 
             currentUsers.clear();

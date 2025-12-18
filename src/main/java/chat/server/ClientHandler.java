@@ -2,6 +2,7 @@ package chat.server;
 
 import chat.common.CommandType;
 import chat.common.Message;
+import chat.common.validation.RegistrationValidator;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,7 +65,7 @@ public class ClientHandler implements Runnable {
                         return true;
                     }
                 }
-                sendMessage(CommandType.ERROR, "Server", "Invalid login or password");
+                sendMessage(CommandType.ERROR, "Server", "Неверные логин или пароль.");
             } 
             else if (message.getType() == CommandType.REGISTER) {
                 String[] parts = message.getMessage().split("\\s+", 2);
@@ -73,17 +74,23 @@ public class ClientHandler implements Runnable {
                     String login = parts[0];
                     String password = parts[1];
 
+                    String validationError = RegistrationValidator.validateRegistration(login, password);
+                    if (validationError != null) {
+                        sendMessage(CommandType.ERROR, "Server", validationError);
+                        continue;
+                    }
+
                     if (server.getAuthService().register(login, password)) {
-                        sendMessage(CommandType.REG_OK, "Server", "Registration successful! Please login.");
+                        sendMessage(CommandType.REG_OK, "Server", "Успешная регистрация! Пожалуйста, войдите в чат.");
                     } else {
-                        sendMessage(CommandType.ERROR, "Server", "Login '" + login + "' is already taken.");
+                        sendMessage(CommandType.ERROR, "Server", "Логин '" + login + "' уже занят.");
                     }
                 } else {
-                    sendMessage(CommandType.ERROR, "Server", "Registration data error");
+                    sendMessage(CommandType.ERROR, "Server", "Ошибка регистрации.");
                 }
             }
             else {
-                sendMessage(CommandType.ERROR, "Server", "Authentication required first");
+                sendMessage(CommandType.ERROR, "Server", "Сначала войдите в чат.");
             }
         }
     }
@@ -96,7 +103,7 @@ public class ClientHandler implements Runnable {
             if (message.getType() == CommandType.PUBLIC_MESSAGE) {
                 long currentTime = System.currentTimeMillis();
                 if (currentTime - lastMessageTime < MESSAGE_DELAY_MS) {
-                    sendMessage(CommandType.ERROR, "Server", "Too fast! Please do not spam.");
+                    sendMessage(CommandType.ERROR, "Server", "Вы слишком быстры! Пожалуйста, не спамьте.");
                     LOGGER.warn("User {} is spamming. Message blocked.", username);
                     continue; 
                 }
@@ -126,7 +133,6 @@ public class ClientHandler implements Runnable {
             out.close();
             socket.close();
         } catch (IOException e) {
-            // ignore
         }
     }
 }

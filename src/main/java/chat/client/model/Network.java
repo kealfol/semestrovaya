@@ -32,8 +32,8 @@ public class Network {
 
     private String username;
     private ChatController controller;
-    
-    // --- НОВОЕ: Буфер для сообщений, которые пришли до открытия окна ---
+
+    // Буфер для сообщений, полученных до инициализации контроллера
     private final List<Message> delayedMessages = new ArrayList<>();
 
     public Network() {
@@ -47,7 +47,7 @@ public class Network {
         try {
             socket = new Socket();
             socket.connect(new InetSocketAddress(host, port), config.getConnectionTimeout());
-            
+
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
             LOGGER.info("Connected to server: {}:{}", host, port);
@@ -61,12 +61,10 @@ public class Network {
         return socket != null && socket.isConnected() && !socket.isClosed();
     }
 
-    // --- ОБНОВЛЕННЫЙ МЕТОД ---
     public void setController(ChatController controller) {
         this.controller = controller;
-        
-        // Как только окно открылось и контроллер пришел,
-        // отдаем ему все сообщения, которые накопились в буфере
+
+        // Как только окно открылось и контроллер пришел, отдаём ему все сообщения, которые накопились в буфере
         synchronized (delayedMessages) {
             for (Message msg : delayedMessages) {
                 Platform.runLater(() -> controller.handleMessage(msg));
@@ -83,20 +81,20 @@ public class Network {
                     String json = in.readUTF();
                     Message message = gson.fromJson(json, Message.class);
 
+                    // Обрабатываем сообщения до аутентификации
                     if (!isAuthenticated) {
                         if (message.getType() == CommandType.AUTH_OK) {
                             this.username = message.getMessage().split("\\s+")[0];
                             LOGGER.info("User authenticated: {}", this.username);
                             isAuthenticated = true;
                             onAuthOk.run();
-                        } 
-                        else if (message.getType() == CommandType.ERROR) {
+                        } else if (message.getType() == CommandType.ERROR) {
                             onAuthError.accept(message.getMessage());
-                        }
-                        else if (message.getType() == CommandType.REG_OK) {
+                        } else if (message.getType() == CommandType.REG_OK) {
                             onRegOk.accept(message.getMessage());
                         }
                     } else {
+                        // После аутентификации либо передаём в контроллер, либо буферезируем
                         if (controller != null) {
                             Platform.runLater(() -> controller.handleMessage(message));
                         } else {
@@ -107,6 +105,7 @@ public class Network {
                     }
                 }
             } catch (IOException e) {
+                // Обработка разрыва соединения
                 LOGGER.warn("Connection lost: {}", e.getMessage());
                 if (controller != null) {
                     Platform.runLater(() -> controller.showError("Connection lost"));
@@ -120,7 +119,7 @@ public class Network {
     public void sendMessage(Message message) {
         if (!isConnected()) {
             LOGGER.error("Attempt to send message without connection");
-            return; 
+            return;
         }
         try {
             out.writeUTF(gson.toJson(message));

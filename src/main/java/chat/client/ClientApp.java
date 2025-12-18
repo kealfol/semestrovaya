@@ -37,9 +37,9 @@ public class ClientApp extends Application {
         controller.init(network, this);
 
         network.startReading(
-            controller::handleAuthOk, 
-            controller::showAlert,    
-            controller::showInfo      
+                controller::handleAuthOk,
+                controller::showAlert,
+                controller::showInfo
         );
 
         primaryStage.setTitle("Вход в чат");
@@ -53,17 +53,12 @@ public class ClientApp extends Application {
         Parent root = loader.load();
 
         ChatController controller = loader.getController();
-
-        // Внутри метода init(network) уже вызывается network.setController(this),
-        // который и спровоцирует выдачу всех накопленных сообщений (включая список юзеров).
         controller.init(network);
 
+        // Обновление заголовка окна с именем пользователя
         primaryStage.setTitle("Чат - " + network.getUsername());
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
-        
-        // УДАЛЕНО: network.sendRequestUserList(); 
-        // Причина: Сервер сам присылает список при входе, запрашивать вручную не нужно.
     }
 
     public static void main(String[] args) {

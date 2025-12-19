@@ -39,14 +39,13 @@ public class ChatController {
         this.network = network;
         this.network.setController(this);
 
-        // Обработка клика
+        userCountLabel.setStyle("-fx-text-fill: #38b50fff; -fx-font-size: 13px; -fx-font-weight: 600; -fx-cursor: hand;");
+
         userCountLabel.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1) {
                 showUsersList();
             }
         });
-
-        userCountLabel.setStyle("-fx-cursor: hand;");
     }
 
     @FXML

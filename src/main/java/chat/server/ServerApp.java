@@ -79,7 +79,6 @@ public class ServerApp {
 
     public synchronized void broadcastMessage(String sender, String message) {
         authService.saveMessage(sender, message);
-        
         for (ClientHandler client : clients) {
             client.sendMessage(CommandType.PUBLIC_MESSAGE, sender, message);
         }
@@ -98,6 +97,16 @@ public class ServerApp {
     }
 
     public AuthService getAuthService() { return authService; }
+
+    // --- НОВЫЙ МЕТОД: Проверка, что юзер онлайн ---
+    public synchronized boolean isUserOnline(String username) {
+        for (ClientHandler client : clients) {
+            if (client.getUsername() != null && client.getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     private void loadConfig() {
         try (InputStream input = getClass().getClassLoader().getResourceAsStream("application.properties")) {

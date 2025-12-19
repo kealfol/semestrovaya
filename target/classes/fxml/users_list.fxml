@@ -5,20 +5,111 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 
 <VBox xmlns="http://javafx.com/javafx/11.0.2" 
       xmlns:fx="http://javafx.com/fxml/1" 
       fx:controller="chat.client.controller.UsersListController"
-      spacing="10" 
-      prefWidth="250" 
-      prefHeight="400">
+      spacing="16" 
+      prefWidth="300" 
+      prefHeight="480"
+      style="-fx-background-color: #1e293b;
+             -fx-background-radius: 16;
+             -fx-border-color: #334155;
+             -fx-border-width: 1;
+             -fx-border-radius: 16;
+             -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 20, 0, 0, 5);">
+    
     <padding>
-        <Insets top="10" right="10" bottom="10" left="10"/>
+        <Insets top="24" right="24" bottom="24" left="24"/>
     </padding>
     
-    <Label fx:id="titleLabel" text="Пользователи в чате:" style="-fx-font-weight: bold;"/>
+    <VBox spacing="8">
+        <Label fx:id="titleLabel" text="АКТИВНЫЕ ПОЛЬЗОВАТЕЛИ" 
+               style="-fx-font-weight: 800; 
+                      -fx-font-size: 18px;
+                      -fx-text-fill: #f8fafc;
+                      -fx-letter-spacing: 0.5px;"/>
+        
+        <Label text="● Сейчас онлайн" 
+               style="-fx-text-fill: #10b981;
+                      -fx-font-size: 12px;
+                      -fx-font-weight: 600;"/>
+    </VBox>
     
-    <ListView fx:id="usersListView" VBox.vgrow="ALWAYS"/>
+    <ListView fx:id="usersListView" VBox.vgrow="ALWAYS"
+              style="-fx-background-color: #0f172a;
+                     -fx-background-radius: 12;
+                     -fx-border-color: #334155;
+                     -fx-border-width: 1;
+                     -fx-border-radius: 12;
+                     -fx-padding: 8;">
+        <style>
+            .list-cell {
+                -fx-padding: 14 16;
+                -fx-background-color: transparent;
+                -fx-font-size: 14px;
+                -fx-text-fill: #cbd5e1;
+                -fx-font-weight: 500;
+            }
+            
+            .list-cell:filled:hover {
+                -fx-background-color: #1e293b;
+                -fx-background-radius: 8;
+            }
+            
+            .list-cell:filled:selected {
+                -fx-background-color: rgba(14, 165, 233, 0.15);
+                -fx-text-fill: #38bdf8;
+                -fx-background-radius: 8;
+            }
+            
+            .list-cell .text {
+                -fx-fill: #cbd5e1;
+            }
+            
+            .list-cell:filled:hover .text {
+                -fx-fill: #f8fafc;
+            }
+        </style>
+    </ListView>
     
-    <Button text="Закрыть" onAction="#handleClose" maxWidth="Infinity"/>
+    <Button text="ЗАКРЫТЬ" onAction="#handleClose" maxWidth="Infinity"
+            style="-fx-background-color: #334155;
+                   -fx-background-radius: 12;
+                   -fx-text-fill: #cbd5e1;
+                   -fx-font-weight: 700;
+                   -fx-font-size: 14px;
+                   -fx-padding: 14;
+                   -fx-cursor: hand;
+                   -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0, 0, 2);"/>
+    
+    <style>
+        .button:hover {
+            -fx-background-color: #475569;
+            -fx-text-fill: #f1f5f9;
+            -fx-scale-x: 1.02;
+            -fx-scale-y: 1.02;
+            -fx-transition: all 0.2s;
+        }
+        
+        .button:pressed {
+            -fx-scale-x: 0.98;
+            -fx-scale-y: 0.98;
+        }
+        
+        .list-view .scroll-bar:vertical {
+            -fx-background-color: transparent;
+            -fx-pref-width: 6px;
+        }
+        
+        .list-view .scroll-bar:vertical .thumb {
+            -fx-background-color: #475569;
+            -fx-background-radius: 3px;
+        }
+        
+        .list-view .scroll-bar:vertical .thumb:hover {
+            -fx-background-color: #64748b;
+        }
+    </style>
 </VBox>

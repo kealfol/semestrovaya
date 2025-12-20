@@ -76,6 +76,12 @@ public class LoginController {
             alert.setTitle("Ошибка");
             alert.setHeaderText(null);
             alert.setContentText(message);
+
+            alert.setOnHidden(event -> {
+                // Очищаем поле пароля после закрытия алёёрта
+                passwordField.clear();
+            });
+
             alert.showAndWait();
         });
     }

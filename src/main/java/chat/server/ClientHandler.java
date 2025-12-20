@@ -62,9 +62,9 @@ public class ClientHandler implements Runnable {
                         // --- ПРОВЕРКА: Если такой пользователь уже онлайн ---
                         if (server.isUserOnline(login)) {
                             // Отправляем ошибку: "Пользователь уже в сети!"
-                            sendMessage(CommandType.ERROR, "Server", "User is already online.");
+                            sendMessage(CommandType.ERROR, "Server", "Пользователь уже в сети.");
                             LOGGER.warn("User {} tried to login, but already online.", login);
-                            return false; // Не пускаем
+                            continue; // Не пускаем
                         }
                         // --- Если всё ок ---
                         this.username = login;
@@ -73,7 +73,7 @@ public class ClientHandler implements Runnable {
                         return true;
                     }
                 }
-                sendMessage(CommandType.ERROR, "Server", "Invalid login or password");
+                sendMessage(CommandType.ERROR, "Server", "Неверные логин или пароль.");
             } 
             else if (message.getType() == CommandType.REGISTER) {
                 String[] parts = message.getMessage().split("\\s+", 2);
@@ -89,16 +89,16 @@ public class ClientHandler implements Runnable {
                     }
 
                     if (server.getAuthService().register(login, password)) {
-                        sendMessage(CommandType.REG_OK, "Server", "Registration successful! Please login.");
+                        sendMessage(CommandType.REG_OK, "Server", "Успешная регистрация. Пожалуйста, войдите в чат.");
                     } else {
-                        sendMessage(CommandType.ERROR, "Server", "Login '" + login + "' is already taken.");
+                        sendMessage(CommandType.ERROR, "Server", "Логин '" + login + "' уже занят.");
                     }
                 } else {
-                    sendMessage(CommandType.ERROR, "Server", "Registration data error");
+                    sendMessage(CommandType.ERROR, "Server", "Ошибка регистрации.");
                 }
             }
             else {
-                sendMessage(CommandType.ERROR, "Server", "Authentication required first");
+                sendMessage(CommandType.ERROR, "Server", "Сначала войдите в чат!");
             }
         }
     }

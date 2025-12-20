@@ -5,27 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17645264-4449-4993-bed2-e1df4eb7562f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/client/ClientApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/client/ClientApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/client/controller/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/client/controller/ChatController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chat/client/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/client/controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/client/exception/ConnectionException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/client/exception/ConnectionException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/client/model/Network.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/client/model/Network.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/common/Config.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chat/common/validation/RegistrationValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/common/validation/RegistrationValidator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chat/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/server/ClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/server/UserEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/ClientApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/chat/client/ClientApp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/controller/ChatController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/chat/client/controller/ChatController$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/controller/ChatController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/chat/client/controller/ChatController$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/controller/ChatController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/chat/client/controller/ChatController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/controller/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/chat/client/controller/LoginController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/exception/ConnectionException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/chat/client/exception/ConnectionException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/model/Network.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/chat/client/model/Network.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/common/Config.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/server/ClientHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/chat/server/ClientHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/server/UserEntity.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/chat.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/chat.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/ClientApp.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/config/ClientConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/controller/ChatController$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/controller/ChatController$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/controller/ChatController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/controller/LoginController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/controller/UsersListController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/exception/ConnectionException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/model/Network.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/common/CommandType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/common/Message.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/common/validation/RegistrationValidator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/server/AuthService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/server/ClientHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chat/server/ServerApp.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fxml/chat.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fxml/login.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fxml/users_list.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/logback.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/logbackserver.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,24 +60,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.ClientApp.executor&quot;: &quot;Run&quot;,
-    &quot;Application.ServerApp.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.semestrovaya [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.ClientApp.executor": "Run",
+    "Application.ServerApp.executor": "Run",
+    "Maven.semestrovaya [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "development",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager" selected="Application.ClientApp">
+}]]></component>
+  <component name="RunManager" selected="Application.ServerApp">
     <configuration name="ClientApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="chat.client.ClientApp" />
       <module name="semestrovaya" />
@@ -97,8 +110,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ClientApp" />
         <item itemvalue="Application.ServerApp" />
+        <item itemvalue="Application.ClientApp" />
       </list>
     </recent_temporary>
   </component>
@@ -121,7 +134,15 @@
       <workItem from="1765606722603" duration="275000" />
       <workItem from="1765607700876" duration="1162000" />
       <workItem from="1765614012432" duration="454000" />
-      <workItem from="1766050819048" duration="4708000" />
+      <workItem from="1766050819048" duration="4987000" />
+      <workItem from="1766063150223" duration="1052000" />
+      <workItem from="1766080954780" duration="433000" />
+      <workItem from="1766083349692" duration="770000" />
+      <workItem from="1766084184049" duration="332000" />
+      <workItem from="1766158033238" duration="125000" />
+      <workItem from="1766158232002" duration="1665000" />
+      <workItem from="1766231935077" duration="1244000" />
+      <workItem from="1766233547840" duration="1018000" />
     </task>
     <servers />
   </component>

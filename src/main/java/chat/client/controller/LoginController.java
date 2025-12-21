@@ -5,7 +5,6 @@ import chat.client.model.Network;
 import chat.common.validation.RegistrationValidator;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.slf4j.Logger;
@@ -32,7 +31,7 @@ public class LoginController {
         String password = passwordField.getText();
 
         if (login.isEmpty() || password.isEmpty()) {
-            showAlert("Логин и пароль не могут быть пустыми!");
+            AlertDialogController.showError("Ошибка", "Логин и пароль не могут быть пустыми!");
             return;
         }
 
@@ -44,16 +43,14 @@ public class LoginController {
         String login = loginField.getText();
         String password = passwordField.getText();
 
-        // Проверка заполненности
         if (login.isEmpty() || password.isEmpty()) {
-            showAlert("Логин и пароль не могут быть пустыми!");
+            AlertDialogController.showError("Ошибка", "Логин и пароль не могут быть пустыми!");
             return;
         }
 
-        // Валидация
         String validationError = RegistrationValidator.validateRegistration(login, password);
         if (validationError != null) {
-            showAlert(validationError);
+            AlertDialogController.showError("Ошибка регистрации", validationError);
             return;
         }
 
@@ -66,33 +63,17 @@ public class LoginController {
                 clientApp.showChatWindow();
             } catch (Exception e) {
                 LOGGER.error("Не удалось открыть окно чата", e);
+                AlertDialogController.showError("Ошибка", "Не удалось открыть окно чата");
             }
         });
     }
 
     public void showAlert(String message) {
-        Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Ошибка");
-            alert.setHeaderText(null);
-            alert.setContentText(message);
-
-            alert.setOnHidden(event -> {
-                // Очищаем поле пароля после закрытия алёёрта
-                passwordField.clear();
-            });
-
-            alert.showAndWait();
-        });
+        AlertDialogController.showError("Ошибка", message);
+        passwordField.clear();
     }
 
     public void showInfo(String message) {
-        Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Успешно");
-            alert.setHeaderText(null);
-            alert.setContentText(message);
-            alert.showAndWait();
-        });
+        AlertDialogController.showInfo("Успешно", message);
     }
 }

@@ -11,9 +11,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -25,7 +22,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class ChatController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ChatController.class);
@@ -74,17 +70,9 @@ public class ChatController {
 
     @FXML
     private void handleLogout() {
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Выход из чата");
-        alert.setHeaderText("Вы уверены, что хотите выйти?");
-        alert.setContentText("Вы будете отключены от сервера.");
+        boolean confirmed = AlertDialogController.showConfirm("Выход из чата", "Вы уверены, что хотите выйти?");
 
-        ButtonType yesButton = new ButtonType("Да, выйти");
-        ButtonType noButton = new ButtonType("Нет, остаться");
-        alert.getButtonTypes().setAll(yesButton, noButton);
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == yesButton) {
+        if (confirmed) {
             logout();
         }
     }
@@ -94,24 +82,26 @@ public class ChatController {
             LOGGER.info("User {} is logging out", network.getUsername());
 
             network.sendLogoutMessage();
-
             network.close();
 
             Platform.runLater(() -> {
                 try {
                     clientApp.showLoginWindow();
                 } catch (IOException e) {
-                    LOGGER.error("Ошибка при открытии окна входа", e);
-                    System.exit(0);
+                    LOGGER.error("Ошибка при открытии окна входа.", e);
+                    AlertDialogController.showError("Критическая ошибка", "Не удалось открыть окно входа");
+                    System.exit(1);
                 }
             });
         } catch (Exception e) {
-            LOGGER.error("Ошибка при выходе", e);
+            LOGGER.error("Ошибка при выходе.", e);
             Platform.runLater(() -> {
                 try {
                     clientApp.showLoginWindow();
                 } catch (IOException ex) {
-                    LOGGER.error("Критическая ошибка", ex);
+                    LOGGER.error("Критическая ошибка.", ex);
+                    AlertDialogController.showError("Критическая ошибка", "Приложение будет закрыто");
+                    System.exit(1);
                 }
             });
         }
@@ -132,7 +122,10 @@ public class ChatController {
                     }
                     break;
                 case USER_LOGOUT:
-                    chatArea.appendText(String.format("[СИСТЕМА]: %s покинул(а) чат%n", message.getSender()));
+                    chatArea.appendText(String.format("[СИСТЕМА]: %s покинул(а) чат.%n", message.getSender()));
+                    break;
+                case REG_OK:
+                    AlertDialogController.showInfo("Успешно", message.getMessage());
                     break;
                 default:
                     break;
@@ -151,7 +144,7 @@ public class ChatController {
 
             userCountLabel.setText(users.size() + " онлайн");
         } catch (Exception e) {
-            LOGGER.error("Ошибка парсинга списка пользователей", e);
+            LOGGER.error("Ошибка парсинга списка пользователей.", e);
         }
     }
 
@@ -172,8 +165,8 @@ public class ChatController {
             stage.show();
 
         } catch (IOException e) {
-            LOGGER.error("Ошибка при открытии окна списка пользователей", e);
-            showError("Не удалось открыть список пользователей");
+            LOGGER.error("Ошибка при открытии окна списка пользователей.", e);
+            AlertDialogController.showError("Ошибка", "Не удалось открыть список пользователей");
         }
     }
 

@@ -7,40 +7,14 @@
     <list default="true" id="17645264-4449-4993-bed2-e1df4eb7562f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chat/client/ClientApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/client/ClientApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chat/client/config/ClientConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/client/config/ClientConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chat/client/controller/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/client/controller/ChatController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/client/model/Network.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/client/model/Network.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/common/CommandType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/common/CommandType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/server/ClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/server/ServerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/server/ServerApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/chat.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/chat.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/ClientApp.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/config/ClientConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/controller/ChatController$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/controller/ChatController$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/controller/ChatController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/controller/LoginController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/controller/UsersListController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/exception/ConnectionException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/client/model/Network.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/common/CommandType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/common/Config.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/common/Message.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/common/validation/RegistrationValidator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/server/AuthService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/server/ClientHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/server/Database.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/server/ServerApp.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/server/TestClient.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/chat/server/UserEntity.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fxml/chat.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fxml/login.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fxml/users_list.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/logback.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/logbackserver.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chat/client/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/client/controller/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chat/client/controller/UsersListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/client/controller/UsersListController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chat/common/Config.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chat/server/Database.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chat/server/TestClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chat/server/UserEntity.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +24,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="FxmlFile" />
         <option value="Class" />
       </list>
     </option>
@@ -153,6 +128,7 @@
       <workItem from="1766256017149" duration="4413000" />
       <workItem from="1766260899605" duration="18000" />
       <workItem from="1766305352721" duration="312000" />
+      <workItem from="1766314456923" duration="3129000" />
     </task>
     <servers />
   </component>

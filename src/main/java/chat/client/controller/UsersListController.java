@@ -30,7 +30,7 @@ public class UsersListController {
         usersListView.getItems().clear();
 
         if (users.isEmpty()) {
-            usersListView.getItems().add("Нет подключенных пользователей");
+            usersListView.getItems().add("Нет подключенных пользователей.");
             titleLabel.setText("Пользователи в чате (0)");
         } else {
             usersListView.getItems().addAll(users);

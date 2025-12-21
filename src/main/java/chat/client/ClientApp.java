@@ -4,6 +4,7 @@ import chat.client.controller.ChatController;
 import chat.client.controller.LoginController;
 import chat.client.model.Network;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -30,7 +31,13 @@ public class ClientApp extends Application {
         try {
             network.connect();
         } catch (Exception e) {
-            System.err.println("Не удалось подключиться к серверу.");
+            Platform.runLater(() -> {
+                chat.client.controller.AlertDialogController.showError(
+                        "Ошибка подключения",
+                        "Не удалось подключиться к серверу"
+                );
+            });
+            System.err.println("Не удалось подключиться к серверу: " + e.getMessage());
         }
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));

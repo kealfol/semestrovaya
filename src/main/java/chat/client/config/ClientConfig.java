@@ -27,10 +27,10 @@ public class ClientConfig {
             if (input != null) {
                 props.load(input);
             } else {
-                LOGGER.warn("Конфигурационный файл не найден. Используются значения по умолчанию");
+                LOGGER.warn("Конфигурационный файл не найден. Используются значения по умолчанию.");
             }
         } catch (IOException e) {
-            LOGGER.error("Ошибка загрузки конфигурации", e);
+            LOGGER.error("Ошибка загрузки конфигурации.", e);
         }
 
         serverHost = props.getProperty("server.host", "localhost");

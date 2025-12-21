@@ -8,5 +8,7 @@ public enum CommandType {
     ERROR,          // Ошибка
     PUBLIC_MESSAGE, // Сообщение в чат
     LIST_REQUEST,   // Запрос списка пользователей
-    CLIENT_MESSAGE  // Служебное
+    CLIENT_MESSAGE,  // Служебное
+    LOGOUT, // Команды выхода
+    USER_LOGOUT // Уведомление о выходе пользователя
 }

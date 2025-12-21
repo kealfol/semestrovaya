@@ -33,7 +33,6 @@ public class Network {
     private String username;
     private ChatController controller;
 
-    // Буфер для сообщений, полученных до инициализации контроллера
     private final List<Message> delayedMessages = new ArrayList<>();
 
     public Network() {
@@ -63,8 +62,6 @@ public class Network {
 
     public void setController(ChatController controller) {
         this.controller = controller;
-
-        // Как только окно открылось и контроллер пришел, отдаём ему все сообщения, которые накопились в буфере
         synchronized (delayedMessages) {
             for (Message msg : delayedMessages) {
                 Platform.runLater(() -> controller.handleMessage(msg));
@@ -81,7 +78,6 @@ public class Network {
                     String json = in.readUTF();
                     Message message = gson.fromJson(json, Message.class);
 
-                    // Обрабатываем сообщения до аутентификации
                     if (!isAuthenticated) {
                         if (message.getType() == CommandType.AUTH_OK) {
                             this.username = message.getMessage().split("\\s+")[0];
@@ -94,7 +90,6 @@ public class Network {
                             onRegOk.accept(message.getMessage());
                         }
                     } else {
-                        // После аутентификации либо передаём в контроллер, либо буферезируем
                         if (controller != null) {
                             Platform.runLater(() -> controller.handleMessage(message));
                         } else {
@@ -105,10 +100,9 @@ public class Network {
                     }
                 }
             } catch (IOException e) {
-                // Обработка разрыва соединения
                 LOGGER.warn("Connection lost: {}", e.getMessage());
                 if (controller != null) {
-                    Platform.runLater(() -> controller.showError("Connection lost"));
+                    Platform.runLater(() -> controller.showError("Соединение с сервером потеряно."));
                 }
             } finally {
                 close();
@@ -147,11 +141,17 @@ public class Network {
         LOGGER.info("Registration request sent for {}", login);
     }
 
+    public void sendLogoutMessage() {
+        Message message = new Message(CommandType.LOGOUT, this.username, "logout");
+        sendMessage(message);
+        LOGGER.info("Logout request sent for {}", this.username);
+    }
+
     public void close() {
         try {
             if (socket != null && !socket.isClosed()) {
                 socket.close();
-                LOGGER.info("Connection closed.");
+                LOGGER.info("Connection closed for user: {}", username);
             }
         } catch (IOException e) {
             LOGGER.error("Error closing connection", e);

@@ -24,6 +24,7 @@ public class ClientHandler implements Runnable {
 
     private String username;
     private long lastMessageTime = 0;
+    private boolean running = true;
 
     public ClientHandler(ServerApp server, Socket socket) throws IOException {
         this.server = server;
@@ -53,31 +54,28 @@ public class ClientHandler implements Runnable {
 
             if (message.getType() == CommandType.AUTH) {
                 String[] parts = message.getMessage().split("\\s+", 2);
-                
+
                 if (parts.length == 2) {
                     String login = parts[0];
                     String password = parts[1];
 
                     if (server.getAuthService().authenticate(login, password)) {
-                        // --- ПРОВЕРКА: Если такой пользователь уже онлайн ---
                         if (server.isUserOnline(login)) {
-                            // Отправляем ошибку: "Пользователь уже в сети!"
                             sendMessage(CommandType.ERROR, "Server", "Пользователь уже в сети.");
                             LOGGER.warn("User {} tried to login, but already online.", login);
-                            continue; // Не пускаем
+                            continue;
                         }
-                        // --- Если всё ок ---
                         this.username = login;
                         sendMessage(CommandType.AUTH_OK, "Server", login);
                         server.subscribe(this);
                         return true;
                     }
                 }
-                sendMessage(CommandType.ERROR, "Server", "Неверные логин или пароль.");
-            } 
+                sendMessage(CommandType.ERROR, "Server", "Неверный логин или пароль.");
+            }
             else if (message.getType() == CommandType.REGISTER) {
                 String[] parts = message.getMessage().split("\\s+", 2);
-                
+
                 if (parts.length == 2) {
                     String login = parts[0];
                     String password = parts[1];
@@ -89,7 +87,7 @@ public class ClientHandler implements Runnable {
                     }
 
                     if (server.getAuthService().register(login, password)) {
-                        sendMessage(CommandType.REG_OK, "Server", "Успешная регистрация. Пожалуйста, войдите в чат.");
+                        sendMessage(CommandType.REG_OK, "Server", "Регистрация успешна! Пожалуйста, войдите в чат.");
                     } else {
                         sendMessage(CommandType.ERROR, "Server", "Логин '" + login + "' уже занят.");
                     }
@@ -98,27 +96,40 @@ public class ClientHandler implements Runnable {
                 }
             }
             else {
-                sendMessage(CommandType.ERROR, "Server", "Сначала войдите в чат!");
+                sendMessage(CommandType.ERROR, "Server", "Сначала нужно войти в чат.");
             }
         }
     }
 
     private void readMessages() throws IOException {
-        while (true) {
+        while (running) {
             String json = in.readUTF();
             Message message = gson.fromJson(json, Message.class);
-            
-            if (message.getType() == CommandType.PUBLIC_MESSAGE) {
-                long currentTime = System.currentTimeMillis();
-                if (currentTime - lastMessageTime < MESSAGE_DELAY_MS) {
-                    sendMessage(CommandType.ERROR, "Server", "Too fast! Please do not spam.");
-                    LOGGER.warn("User {} is spamming. Message blocked.", username);
-                    continue; 
-                }
-                lastMessageTime = currentTime;
-                server.broadcastMessage(this.username, message.getMessage());
+
+            switch (message.getType()) {
+                case PUBLIC_MESSAGE:
+                    handlePublicMessage(message);
+                    break;
+                case LOGOUT:
+                    LOGGER.info("User {} requested logout", username);
+                    running = false;
+                    sendMessage(CommandType.ERROR, "Server", "logout_ack");
+                    return;
+                default:
+                    LOGGER.warn("Unknown message type from user {}: {}", username, message.getType());
             }
         }
+    }
+
+    private void handlePublicMessage(Message message) {
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastMessageTime < MESSAGE_DELAY_MS) {
+            sendMessage(CommandType.ERROR, "Server", "Вы слишком быстры! Пожалуйста, подождите.");
+            LOGGER.warn("User {} is spamming. Message blocked.", username);
+            return;
+        }
+        lastMessageTime = currentTime;
+        server.broadcastMessage(this.username, message.getMessage());
     }
 
     public void sendMessage(CommandType type, String sender, String text) {

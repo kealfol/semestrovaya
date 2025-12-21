@@ -31,31 +31,40 @@
             <Region HBox.hgrow="ALWAYS"/>
 
             <HBox spacing="8" alignment="CENTER_RIGHT">
-                <Label fx:id="userCountLabel" text="0 онлайн" />
+                <Label fx:id="userCountLabel" text="0 онлайн"
+                       style="-fx-text-fill: #38b50fff;
+                              -fx-font-size: 13px;
+                              -fx-font-weight: 600;
+                              -fx-cursor: hand;"/>
+
+                <Button text="🚪 ВЫХОД" onAction="#handleLogout"
+                        style="-fx-background-color: linear-gradient(to right, #dc2626, #ef4444);
+                               -fx-background-radius: 10;
+                               -fx-text-fill: white;
+                               -fx-font-weight: 700;
+                               -fx-font-size: 12px;
+                               -fx-padding: 8 16;
+                               -fx-cursor: hand;
+                               -fx-effect: dropshadow(gaussian, rgba(220, 38, 38, 0.3), 8, 0, 0, 2);"/>
             </HBox>
         </HBox>
     </top>
 
     <center>
         <TextArea fx:id="chatArea" editable="false" wrapText="true"
-                  style="-fx-background-color: #0f172a;
-                         -fx-background-radius: 0;
-                         -fx-border-color: transparent;
-                         -fx-font-size: 14px;
-                         -fx-font-family: 'Consolas', 'Monospace', monospace;
-                         -fx-text-fill: #000000ff;
-                         -fx-padding: 20 24;">
-            <style>
-                .content {
-                -fx-background-color: #0f172a;
-                -fx-cursor: default;
-                -fx-padding: 10;
-                }
-
-                .text {
-                -fx-fill: #000000ff;
-                }
-            </style>
+                  style="
+                    -fx-background-color: #0f172a;
+                    -fx-control-inner-background: #0f172a;
+                    -fx-background-insets: 0;
+                    -fx-background-radius: 0;
+                    -fx-border-color: #0f172a;
+                    -fx-border-width: 0;
+                    -fx-border-radius: 0;
+                    -fx-font-size: 14px;
+                    -fx-font-family: 'Consolas', 'Monospace', monospace;
+                    -fx-text-fill: #ffffff;
+                    -fx-padding: 20 24;
+                  ">
         </TextArea>
     </center>
 
@@ -91,6 +100,55 @@
     </bottom>
 
     <style>
+        /* Стили для TextArea */
+        .text-area {
+        -fx-background-color: #0f172a;
+        -fx-background-insets: 0;
+        -fx-background-radius: 0;
+        -fx-border-color: #0f172a;
+        -fx-border-width: 0;
+        -fx-border-radius: 0;
+        -fx-padding: 0;
+        }
+
+        .text-area .content {
+        -fx-background-color: #0f172a;
+        -fx-background-insets: 0;
+        -fx-background-radius: 0;
+        -fx-border-color: #0f172a;
+        -fx-border-width: 0;
+        -fx-border-radius: 0;
+        -fx-padding: 20 24;
+        }
+
+        .text-area .scroll-pane {
+        -fx-background-color: #0f172a;
+        -fx-background-insets: 0;
+        -fx-background-radius: 0;
+        -fx-border-color: #0f172a;
+        -fx-border-width: 0;
+        -fx-border-radius: 0;
+        }
+
+        .text-area .scroll-pane .viewport {
+        -fx-background-color: #0f172a;
+        -fx-background-insets: 0;
+        -fx-background-radius: 0;
+        -fx-border-color: #0f172a;
+        -fx-border-width: 0;
+        -fx-border-radius: 0;
+        }
+
+        .text-area .scroll-pane .content {
+        -fx-background-color: #0f172a;
+        -fx-background-insets: 0;
+        -fx-background-radius: 0;
+        -fx-border-color: #0f172a;
+        -fx-border-width: 0;
+        -fx-border-radius: 0;
+        }
+
+        /* Остальные стили */
         .button:hover {
         -fx-scale-x: 1.02;
         -fx-scale-y: 1.02;
@@ -118,6 +176,20 @@
         }
 
         .scroll-bar:vertical .thumb:hover {
+        -fx-background-color: #475569;
+        }
+
+        .scroll-bar:horizontal {
+        -fx-background-color: transparent;
+        -fx-pref-height: 6px;
+        }
+
+        .scroll-bar:horizontal .thumb {
+        -fx-background-color: #334155;
+        -fx-background-radius: 3px;
+        }
+
+        .scroll-bar:horizontal .thumb:hover {
         -fx-background-color: #475569;
         }
     </style>

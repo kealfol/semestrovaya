@@ -18,6 +18,13 @@ public class ClientApp extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
+        showLoginWindow();
+    }
+
+    public void showLoginWindow() throws IOException {
+        if (network != null) {
+            network.close();
+        }
         this.network = new Network();
 
         try {
@@ -26,10 +33,6 @@ public class ClientApp extends Application {
             System.err.println("Не удалось подключиться к серверу.");
         }
 
-        showLoginWindow();
-    }
-
-    private void showLoginWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
         Parent root = loader.load();
 
@@ -44,7 +47,11 @@ public class ClientApp extends Application {
 
         primaryStage.setTitle("Вход в чат");
         primaryStage.setScene(new Scene(root));
-        primaryStage.setOnCloseRequest(event -> network.close());
+        primaryStage.setOnCloseRequest(event -> {
+            if (network != null) {
+                network.close();
+            }
+        });
         primaryStage.show();
     }
 
@@ -53,11 +60,10 @@ public class ClientApp extends Application {
         Parent root = loader.load();
 
         ChatController controller = loader.getController();
-        controller.init(network);
+        controller.init(network, this, primaryStage);
 
-        // Обновление заголовка окна с именем пользователя
         primaryStage.setTitle("Чат - " + network.getUsername());
-        primaryStage.setScene(new Scene(root, 600, 400));
+        primaryStage.setScene(new Scene(root, 900, 700));
         primaryStage.show();
     }
 

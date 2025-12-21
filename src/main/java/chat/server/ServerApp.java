@@ -47,7 +47,7 @@ public class ServerApp {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             LOGGER.info("Server started on port: {}", port);
             LOGGER.info("Max connections limit: {}", MAX_CLIENTS);
-            
+
             while (true) {
                 Socket socket = serverSocket.accept();
                 LOGGER.info("Client connected: {}", socket.getInetAddress());
@@ -64,17 +64,26 @@ public class ServerApp {
     public synchronized void subscribe(ClientHandler client) {
         clients.add(client);
         broadcastClientsList();
-        
-        List<Message> history = authService.getLastMessages(20); 
+
+        List<Message> history = authService.getLastMessages(20);
         for (Message msg : history) {
-            String json = gson.toJson(msg);
             client.sendMessage(CommandType.PUBLIC_MESSAGE, msg.getSender(), msg.getMessage());
         }
+
+        broadcastMessage("СИСТЕМА", "Пользователь " + client.getUsername() + " присоединился к чату.");
     }
 
     public synchronized void unsubscribe(ClientHandler client) {
-        clients.remove(client);
-        broadcastClientsList();
+        String username = client.getUsername();
+        boolean removed = clients.remove(client);
+        if (removed && username != null) {
+            LOGGER.info("User {} disconnected", username);
+            broadcastClientsList();
+            // Уведомляем всех о выходе пользователя
+            for (ClientHandler c : clients) {
+                c.sendMessage(CommandType.USER_LOGOUT, username, "покинул чат.");
+            }
+        }
     }
 
     public synchronized void broadcastMessage(String sender, String message) {
@@ -88,9 +97,9 @@ public class ServerApp {
         List<String> usernames = clients.stream()
                 .map(ClientHandler::getUsername)
                 .collect(Collectors.toList());
-        
+
         String jsonUserList = gson.toJson(usernames);
-        
+
         for (ClientHandler client : clients) {
             client.sendMessage(CommandType.CLIENT_MESSAGE, "Server", jsonUserList);
         }
@@ -98,7 +107,6 @@ public class ServerApp {
 
     public AuthService getAuthService() { return authService; }
 
-    // --- НОВЫЙ МЕТОД: Проверка, что юзер онлайн ---
     public synchronized boolean isUserOnline(String username) {
         for (ClientHandler client : clients) {
             if (client.getUsername() != null && client.getUsername().equals(username)) {

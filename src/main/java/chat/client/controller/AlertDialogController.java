@@ -1,11 +1,13 @@
 package chat.client.controller;
 
+import chat.client.util.AppIcon;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -22,6 +24,9 @@ public class AlertDialogController {
 
     @FXML
     private Label messageLabel;
+
+    @FXML
+    private HBox buttonsContainer;
 
     @FXML
     private Button yesButton;
@@ -58,6 +63,8 @@ public class AlertDialogController {
             stage.setTitle(title);
             stage.initModality(Modality.APPLICATION_MODAL);
 
+            AppIcon.applyTo(stage);
+
             controller.setup(message, isConfirm);
 
             stage.setScene(scene);
@@ -73,8 +80,24 @@ public class AlertDialogController {
 
     private void setup(String message, boolean isConfirm) {
         messageLabel.setText(message);
-        noButton.setVisible(isConfirm);
-        yesButton.setText(isConfirm ? "Да" : "OK");
+        
+        if (isConfirm) {
+            
+            noButton.setVisible(true);
+            noButton.setManaged(true);
+            yesButton.setText("Да");
+            
+            
+            buttonsContainer.setAlignment(javafx.geometry.Pos.CENTER);
+        } else {
+            
+            noButton.setVisible(false);
+            noButton.setManaged(false); 
+            yesButton.setText("ОК");
+            
+            
+            buttonsContainer.setAlignment(javafx.geometry.Pos.CENTER);
+        }
     }
 
     @FXML

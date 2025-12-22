@@ -10,16 +10,68 @@
       xmlns:fx="http://javafx.com/fxml/1"
       fx:id="root"
       fx:controller="chat.client.controller.AlertDialogController"
-      spacing="10">
+      spacing="16"
+      style="-fx-background-color: #0f172a;
+             -fx-background-radius: 16;
+             -fx-border-color: #334155;
+             -fx-border-width: 1;
+             -fx-border-radius: 16;
+             -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 20, 0, 0, 5);
+             -fx-padding: 24 28 24 28;">
 
-       <padding>
-              <Insets top="15" right="15" bottom="15" left="15"/>
-       </padding>
+    <Label fx:id="messageLabel" 
+           wrapText="true"
+           alignment="CENTER"
+           style="-fx-text-fill: #f8fafc;
+                  -fx-font-size: 15px;
+                  -fx-font-weight: 500;
+                  -fx-line-spacing: 4px;
+                  -fx-padding: 0 0 16 0;"/>
 
-       <Label fx:id="messageLabel" wrapText="true"/>
+    <!-- HBox будет центрировать свои видимые дочерние элементы -->
+    <HBox fx:id="buttonsContainer" spacing="12" alignment="CENTER">
+        <Button fx:id="noButton" text="НЕТ" onAction="#handleNo"
+                style="-fx-background-color: #334155;
+                       -fx-background-radius: 10;
+                       -fx-text-fill: #cbd5e1;
+                       -fx-font-weight: 700;
+                       -fx-font-size: 14px;
+                       -fx-padding: 12 28;
+                       -fx-cursor: hand;
+                       -fx-min-width: 90px;
+                       -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0, 0, 2);"/>
+        
+        <Button fx:id="yesButton" text="ОК" onAction="#handleYes"
+                style="-fx-background-color: linear-gradient(to right, #0ea5e9, #3b82f6);
+                       -fx-background-radius: 10;
+                       -fx-text-fill: white;
+                       -fx-font-weight: 700;
+                       -fx-font-size: 14px;
+                       -fx-padding: 12 32;
+                       -fx-cursor: hand;
+                       -fx-min-width: 90px;
+                       -fx-effect: dropshadow(gaussian, rgba(14, 165, 233, 0.3), 10, 0, 0, 2);"/>
+    </HBox>
 
-       <HBox spacing="10" alignment="CENTER_RIGHT">
-              <Button fx:id="noButton" text="Нет" onAction="#handleNo"/>
-              <Button fx:id="yesButton" text="ОК" onAction="#handleYes"/>
-       </HBox>
+    <style>
+        .button:hover {
+            -fx-scale-x: 1.02;
+            -fx-scale-y: 1.02;
+            -fx-transition: all 0.2s;
+        }
+        
+        .button:pressed {
+            -fx-scale-x: 0.98;
+            -fx-scale-y: 0.98;
+        }
+        
+        #noButton:hover {
+            -fx-background-color: #475569;
+            -fx-text-fill: #f1f5f9;
+        }
+        
+        #yesButton:hover {
+            -fx-background-color: linear-gradient(to right, #0284c7, #2563eb);
+        }
+    </style>
 </VBox>

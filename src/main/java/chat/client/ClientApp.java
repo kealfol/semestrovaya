@@ -3,6 +3,7 @@ package chat.client;
 import chat.client.controller.ChatController;
 import chat.client.controller.LoginController;
 import chat.client.model.Network;
+import chat.client.util.AppIcon;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -54,6 +55,9 @@ public class ClientApp extends Application {
 
         primaryStage.setTitle("Вход в чат");
         primaryStage.setScene(new Scene(root));
+
+        AppIcon.applyTo(primaryStage);
+
         primaryStage.setOnCloseRequest(event -> {
             if (network != null) {
                 network.close();
@@ -71,6 +75,9 @@ public class ClientApp extends Application {
 
         primaryStage.setTitle("Чат - " + network.getUsername());
         primaryStage.setScene(new Scene(root, 900, 700));
+
+        AppIcon.applyTo(primaryStage);
+
         primaryStage.show();
     }
 

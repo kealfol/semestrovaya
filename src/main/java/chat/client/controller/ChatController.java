@@ -2,6 +2,7 @@ package chat.client.controller;
 
 import chat.client.ClientApp;
 import chat.client.model.Network;
+import chat.client.util.AppIcon;
 import chat.common.CommandType;
 import chat.common.Message;
 import com.google.gson.Gson;
@@ -158,6 +159,8 @@ public class ChatController {
 
             Stage stage = new Stage();
             controller.setStage(stage);
+
+            AppIcon.applyTo(stage);
 
             stage.setTitle("Пользователи в чате");
             stage.setScene(new Scene(root));
